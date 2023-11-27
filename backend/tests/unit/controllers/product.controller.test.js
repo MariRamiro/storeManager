@@ -6,7 +6,7 @@
 
 // describe('Testing controller layer', function () {
 //   it('should return all products', async function () {
-//     sinon.stub(service, 'getAllProducts').resolves({ status: 'SUCCESS', data: productsMock });
+//     sinon.stub(service, 'getAllProducts').resolves({ status: 'SUCCESSFUL', data: productsMock });
 
 //     const req = {};
 //     const res = {};
@@ -21,7 +21,7 @@
 //   });
 
 //   it('should return a product by id', async function () {
-//     sinon.stub(service, 'getAllProducts').resolves({ status: 'SUCCESS', data: productsMock[0] });
+//     sinon.stub(service, 'getAllProducts').resolves({ status: 'SUCCESSFUL', data: productsMock[0] });
 
 //     const req = {
 //       params: {
