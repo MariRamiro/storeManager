@@ -5,7 +5,7 @@ const productsMock = require('../mocks/products.mocks');
 
 const connection = require('../../../src/db/connection');
 
-describe('Testing model layer', function () {
+describe('Testing product model layer', function () {
   it('should return all products', async function () {
     sinon.stub(connection, 'execute').resolves([productsMock]);
 

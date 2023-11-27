@@ -15,17 +15,12 @@ describe('Testing sales model layer', function () {
   });
 
   it('should return sale by id', async function () {
-    sinon.stub(connection, 'execute').resolves([[salesMock]][0]);
+    sinon.stub(connection, 'execute').resolves([salesMock]);
 
     const sales = await model.getByIdSale(1);
 
     expect(sales).to.be.an('array');
-    expect(sales).to.be.deep.equal({
-      saleId: 1,
-      date: '2023-11-27T02:37:42.000Z',
-      productId: 1,
-      quantity: 5,
-    });
+    expect(sales).to.be.deep.equal(salesMock);
   });
 
   afterEach(function () {

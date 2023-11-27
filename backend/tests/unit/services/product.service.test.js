@@ -4,7 +4,7 @@ const service = require('../../../src/services/products.service');
 const model = require('../../../src/models/products.model');
 const productsMock = require('../mocks/products.mocks');
 
-describe('Testing service layer', function () {
+describe('Testing product service layer', function () {
   it('should return all products', async function () {
     sinon.stub(model, 'getAllProducts').resolves(productsMock);
     
