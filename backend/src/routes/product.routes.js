@@ -10,4 +10,6 @@ productsRoutes.get('/', controller.getAllProducts);
 
 productsRoutes.get('/:id', controller.getByIdProduct);
 
+productsRoutes.put('/:id', productsCheck, controller.updateProduct);
+
 module.exports = productsRoutes;
