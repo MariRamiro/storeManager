@@ -15,7 +15,14 @@ const getByIdSale = async (req, res) => {
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
+const createSale = async (req, res) => {
+  const dataList = req.body;
+  const { status, data } = await service.createSale(dataList);
+  return res.status(mapStatusHTTP(status)).json(data);
+};
+
 module.exports = {
   getAllSales,
   getByIdSale,
+  createSale,
 };

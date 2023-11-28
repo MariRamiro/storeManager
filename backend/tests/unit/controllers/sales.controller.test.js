@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const service = require('../../../src/services/sales.service');
 const controller = require('../../../src/controllers/sales.controller');
-const salesMock = require('../mocks/sales.mocks');
+const { salesMock, salesMockBody, salesMockRes } = require('../mocks/sales.mocks');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -43,6 +43,25 @@ describe('Testing sales controller layer', function () {
     expect(res.json).to.be.deep.calledWith(salesMock);
   });
 
+  it('should create a sale', async function () {
+    const res = {};
+    const req = {
+      body: { 
+        salesMockBody,
+      },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    sinon.stub(service, 'createSale').resolves({ status: 201, data: salesMockRes });
+
+    await controller.createSale(req, res);
+
+    expect(res.status).to.be.calledWith(201);
+    expect(res.json).to.be.deep.calledWith(salesMockRes);
+  });
+  
   afterEach(function () {
     sinon.restore();
   });
