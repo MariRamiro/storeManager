@@ -23,11 +23,11 @@ describe('Testing sales service layer', function () {
     expect(data).to.be.deep.equal([salesMock]);
   });
 
-  it('should create a sale', async function () {
-    const createId = 3;
-    sinon.stub(model, 'createSale').resolves(createId);
+  it('should insert a sale', async function () {
+    const insertId = 3;
+    sinon.stub(model, 'insertSale').resolves(insertId);
 
-    const { status, data } = await service.createSale(salesMockBody);
+    const { status, data } = await service.insertSale(salesMockBody);
 
     expect(status).to.be.equal(201);
     expect(data).to.be.deep.equal(salesMockRes);

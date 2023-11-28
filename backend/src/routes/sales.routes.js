@@ -5,7 +5,7 @@ const { salesCheck,
 
 const salesRoutes = Router();
 
-salesRoutes.post('/', salesCheck, salesProductsCheck, controller.createSale);
+salesRoutes.post('/', salesCheck, salesProductsCheck, controller.insertSale);
 
 salesRoutes.get('/', controller.getAllSales);
 

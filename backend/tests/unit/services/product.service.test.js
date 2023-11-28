@@ -23,6 +23,28 @@ describe('Testing product service layer', function () {
     expect(product.status).to.be.equal(200);
   });
 
+  it('should delete a product', async function () {
+    const id = 1;
+    const affectedRows = 1;
+    sinon.stub(model, 'deleteProduct').resolves(affectedRows);
+
+    const product = await service.deleteProduct(id);
+
+    expect(product.data).to.be.deep.equal(affectedRows);
+    expect(product.status).to.be.equal(204);
+  });
+
+  it('should not delete a product that not exists', async function () {
+    const id = 7;
+    const affectedRows = 0;
+    sinon.stub(model, 'deleteProduct').resolves(affectedRows);
+
+    const product = await service.deleteProduct(id);
+
+    expect(product.data.message).to.be.equal('Product not found');
+    expect(product.status).to.be.equal(404);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

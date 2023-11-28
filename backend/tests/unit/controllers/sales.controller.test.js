@@ -43,7 +43,7 @@ describe('Testing sales controller layer', function () {
     expect(res.json).to.be.deep.calledWith(salesMock);
   });
 
-  it('should create a sale', async function () {
+  it('should insert a sale', async function () {
     const res = {};
     const req = {
       body: { 
@@ -54,9 +54,9 @@ describe('Testing sales controller layer', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
 
-    sinon.stub(service, 'createSale').resolves({ status: 201, data: salesMockRes });
+    sinon.stub(service, 'insertSale').resolves({ status: 201, data: salesMockRes });
 
-    await controller.createSale(req, res);
+    await controller.insertSale(req, res);
 
     expect(res.status).to.be.calledWith(201);
     expect(res.json).to.be.deep.calledWith(salesMockRes);

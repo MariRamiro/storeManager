@@ -16,7 +16,7 @@ const getByIdProduct = async (id) => {
   return (product);
 };
 
-const createProduct = async (data) => {
+const insertProduct = async (data) => {
   const [insert] = await connection.execute(
     `INSERT INTO products (name)
       VALUES (?);`,
@@ -31,9 +31,15 @@ const updateProduct = async (name, id) => {
   return affectedRows;
 };
 
+const deleteProduct = async (id) => {
+  const [{ affectedRows }] = await connection.execute('DELETE FROM products WHERE id = ?;', [id]);
+  return affectedRows;
+};
+
 module.exports = {
   getAllProducts,
   getByIdProduct,
-  createProduct,
+  insertProduct,
   updateProduct,
+  deleteProduct,
 };

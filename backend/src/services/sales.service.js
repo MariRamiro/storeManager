@@ -14,10 +14,10 @@ const getByIdSale = async (id) => {
   return { status: 200, data: sale };
 };
 
-const createSale = async (data) => {
-  const createId = await model.createSale(data);
+const insertSale = async (data) => {
+  const insertId = await model.insertSale(data);
   const newData = {
-    id: createId,
+    id: insertId,
     itemsSold: data.map((item) => ({
       productId: item.productId,
       quantity: item.quantity,
@@ -29,5 +29,5 @@ const createSale = async (data) => {
 module.exports = {
   getAllSales,
   getByIdSale,
-  createSale,
+  insertSale,
 };

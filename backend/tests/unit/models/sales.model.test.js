@@ -23,14 +23,14 @@ describe('Testing sales model layer', function () {
     expect(sales).to.be.deep.equal(salesMock);
   });
 
-  it('should create a sale', async function () {
-    const createId = 3;
-    sinon.stub(connection, 'execute').resolves([{ createId }]);
+  it('should insert a sale', async function () {
+    const insertId = 3;
+    sinon.stub(connection, 'execute').resolves([{ insertId }]);
 
-    const sales = await model.createSale(salesMockBody);
+    const sales = await model.insertSale(salesMockBody);
 
     expect(sales).to.be.an('array');
-    expect(sales).to.be.deep.equal(createId);
+    expect(sales).to.be.deep.equal(insertId);
   });
 
   afterEach(function () {

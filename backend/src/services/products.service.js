@@ -13,8 +13,8 @@ const getByIdProduct = async (id) => {
   return { status: 200, data: product };
 };
 
-const createProduct = async (data) => {
-  const { insertId } = await model.createProduct(data);
+const insertProduct = async (data) => {
+  const { insertId } = await model.insertProduct(data);
   return { status: 201, data: { id: insertId } };
 };
 
@@ -26,9 +26,18 @@ const updateProduct = async (name, id) => {
   return { status: 200, data: affectedRows };
 };
 
+const deleteProduct = async (id) => {
+  const affectedRows = await model.deleteProduct(id);
+  if (affectedRows === 0) {
+    return { status: 404, data: { message: 'Product not found' } };
+  }
+  return { status: 204, data: affectedRows };
+};
+
 module.exports = {
   getAllProducts,
   getByIdProduct,
-  createProduct,
+  insertProduct,
   updateProduct,
+  deleteProduct,
 };

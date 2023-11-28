@@ -26,6 +26,16 @@ describe('Testing product model layer', function () {
       name: 'Martelo de Thor',
     });
   });
+
+  it('should delete a product', async function () {
+    const id = 1;
+    const affectedRows = 1;
+    sinon.stub(connection, 'execute').resolves([{ affectedRows }]);
+
+    const product = await model.deleteProduct(id);
+
+    expect(product).to.be.deep.equal(affectedRows);
+  });
   
   afterEach(function () {
     sinon.restore();

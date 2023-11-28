@@ -42,6 +42,42 @@ describe('Testing controller layer', function () {
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.deep.calledWith(productsMock[0]);
   });
+
+  it('should delete a product', async function () {
+    const res = {};
+    const req = {
+      params: 1,
+    };
+
+    const affectedRows = 1;
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    sinon.stub(service, 'deleteProduct').resolves({ status: 204, data: affectedRows });
+
+    await controller.deleteProduct(req, res);
+
+    expect(res.status).to.be.calledWith(204);
+    expect(res.json).to.be.deep.calledWith(affectedRows);
+  });
+
+  it('should not delete a product that not exists', async function () {
+    const res = {};
+    const req = {
+      params: 7,
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    sinon.stub(service, 'deleteProduct').resolves({ status: 404, data: { message: 'Product not found' } });
+
+    await controller.deleteProduct(req, res);
+
+    expect(res.status).to.be.calledWith(404);
+    expect(res.json).to.be.deep.calledWith({ message: 'Product not found' });
+  });
   
   afterEach(function () {
     sinon.restore();
