@@ -1,8 +1,9 @@
 const httpErrorMap = {
   SUCCESSFUL: 200,
   CREATED: 201,
+  DELETED: 204,
   NOT_FOUND: 404,
-  CONFLICT: 409,
+  REQUIRED: 400,
   INVALID_VALUE: 422,
 };
 
