@@ -11,7 +11,7 @@ describe('Testing product service layer', function () {
     const allProducts = await service.getAllProducts();
   
     expect(allProducts.data).to.be.deep.equal(productsMock);
-    expect(allProducts.status).to.be.equal(200);
+    expect(allProducts.status).to.be.equal('SUCCESSFUL');
   });
 
   it('should return a product by id', async function () {
@@ -20,7 +20,7 @@ describe('Testing product service layer', function () {
     const product = await service.getByIdProduct(1);
 
     expect(product.data).to.be.deep.equal(productsMock[0]);
-    expect(product.status).to.be.equal(200);
+    expect(product.status).to.be.equal('SUCCESSFUL');
   });
 
   it('should delete a product', async function () {
@@ -31,7 +31,7 @@ describe('Testing product service layer', function () {
     const product = await service.deleteProduct(id);
 
     expect(product.data).to.be.deep.equal(affectedRows);
-    expect(product.status).to.be.equal(204);
+    expect(product.status).to.be.equal('DELETED');
   });
 
   it('should not delete a product that not exists', async function () {
@@ -42,7 +42,7 @@ describe('Testing product service layer', function () {
     const product = await service.deleteProduct(id);
 
     expect(product.data.message).to.be.equal('Product not found');
-    expect(product.status).to.be.equal(404);
+    expect(product.status).to.be.equal('NOT_FOUND');
   });
 
   afterEach(function () {

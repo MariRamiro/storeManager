@@ -15,7 +15,7 @@ const getByIdProduct = async (id) => {
 
 const insertProduct = async (data) => {
   const { insertId } = await model.insertProduct(data);
-  return { status: 201, data: { id: insertId } };
+  return { status: 'CREATED', data: { id: insertId } };
 };
 
 const updateProduct = async (name, id) => {

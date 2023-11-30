@@ -2,16 +2,16 @@ const model = require('../models/sales.model');
 
 const getAllSales = async () => {
   const sales = await model.getAllSales();
-  return { status: 200, data: sales };
+  return { status: 'SUCCESSFUL', data: sales };
 };
 
 const getByIdSale = async (id) => {
   const sale = await model.getByIdSale(id);
   
   if (sale.length === 0) {
-    return { status: 404, data: { message: 'Sale not found' } };
+    return { status: 'NOT_FOUND', data: { message: 'Sale not found' } };
   }
-  return { status: 200, data: sale };
+  return { status: 'SUCCESSFUL', data: sale };
 };
 
 const insertSale = async (data) => {
@@ -23,7 +23,7 @@ const insertSale = async (data) => {
       quantity: item.quantity,
     })),
   };
-  return { status: 201, data: newData };
+  return { status: 'CREATED', data: newData };
 };
 
 module.exports = {

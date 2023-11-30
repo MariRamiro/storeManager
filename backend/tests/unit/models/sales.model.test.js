@@ -29,7 +29,7 @@ describe('Testing sales model layer', function () {
 
     const sales = await model.insertSale(salesMockBody);
 
-    expect(sales).to.be.an('array');
+    expect(sales).to.be.an('number');
     expect(sales).to.be.deep.equal(insertId);
   });
 

@@ -10,7 +10,7 @@ const { expect } = chai;
 
 describe('Testing sales controller layer', function () {
   it('should return sales', async function () {
-    sinon.stub(service, 'getAllSales').resolves({ status: 200, data: salesMock });
+    sinon.stub(service, 'getAllSales').resolves({ status: 'SUCCESSFUL', data: salesMock });
 
     const req = {};
     const res = {};
@@ -25,7 +25,7 @@ describe('Testing sales controller layer', function () {
   });
 
   it('should return sale by id', async function () {
-    sinon.stub(service, 'getByIdSale').resolves({ status: 200, data: salesMock[0] });
+    sinon.stub(service, 'getByIdSale').resolves({ status: 'SUCCESSFUL', data: salesMock[0] });
 
     const req = {
       params: {
@@ -40,7 +40,7 @@ describe('Testing sales controller layer', function () {
     await controller.getByIdSale(req, res);
 
     expect(res.status).to.be.calledWith(200);
-    expect(res.json).to.be.deep.calledWith(salesMock);
+    expect(res.json).to.be.deep.calledWith(salesMock[0]);
   });
 
   it('should insert a sale', async function () {
@@ -54,7 +54,7 @@ describe('Testing sales controller layer', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
 
-    sinon.stub(service, 'insertSale').resolves({ status: 201, data: salesMockRes });
+    sinon.stub(service, 'insertSale').resolves({ status: 'CREATED', data: salesMockRes });
 
     await controller.insertSale(req, res);
 

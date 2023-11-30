@@ -11,7 +11,7 @@ describe('Testing sales service layer', function () {
     const sales = await service.getAllSales();
 
     expect(sales.data).to.be.deep.equal([salesMock]);
-    expect(sales.status).to.be.equal(200);
+    expect(sales.status).to.be.equal('SUCCESSFUL');
   });
 
   it('should return sale by id', async function () {
@@ -19,7 +19,7 @@ describe('Testing sales service layer', function () {
 
     const { status, data } = await service.getByIdSale(1);
 
-    expect(status).to.be.equal(200);
+    expect(status).to.be.equal('SUCCESSFUL');
     expect(data).to.be.deep.equal([salesMock]);
   });
 
@@ -29,7 +29,7 @@ describe('Testing sales service layer', function () {
 
     const { status, data } = await service.insertSale(salesMockBody);
 
-    expect(status).to.be.equal(201);
+    expect(status).to.be.equal('CREATED');
     expect(data).to.be.deep.equal(salesMockRes);
   });
   
