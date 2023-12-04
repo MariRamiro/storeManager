@@ -43,6 +43,24 @@ describe('Testing sales controller layer', function () {
     expect(res.json).to.be.deep.calledWith(salesMock[0]);
   });
 
+  it('should return error message', async function () {
+    sinon.stub(service, 'getByIdSale').resolves({ status: 'NOT_FOUND', data: { message: 'Sale not found' } });
+    
+    const req = {
+      params: {
+        id: 7,
+      },
+    };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    await controller.getByIdSale(req, res);
+
+    expect(res.status).to.be.calledWith(404);
+  });
+
   it('should insert a sale', async function () {
     const res = {};
     const req = {

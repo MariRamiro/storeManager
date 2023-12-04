@@ -27,6 +27,15 @@ describe('Testing product model layer', function () {
     });
   });
 
+  it('should return message "Product not found" if nonexistent id', async function () {
+    sinon.stub(connection, 'execute').resolves([[{ message: 'Product not found' }]]);
+
+    const product = await model.getByIdProduct(7);
+
+    expect(product).to.be.an('object');
+    expect(product).to.contain({ message: 'Product not found' });
+  });
+
   it('should insert a new product', async function () {
     sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
 

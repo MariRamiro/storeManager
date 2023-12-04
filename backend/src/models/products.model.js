@@ -13,7 +13,7 @@ const getByIdProduct = async (id) => {
     'SELECT * FROM products WHERE id = ?;', 
     [id],
   );
-  return (product);
+  return camelize(product);
 };
 
 const insertProduct = async (productName) => {

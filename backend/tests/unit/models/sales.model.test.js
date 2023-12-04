@@ -23,6 +23,14 @@ describe('Testing sales model layer', function () {
     expect(sales).to.be.deep.equal(salesMock);
   });
 
+  it('should return sale error message', async function () {
+    sinon.stub(connection, 'execute').resolves([{ 'Sales not found': 'Sale not found '}]);
+
+    const sales = await model.getByIdSale(7);
+
+    expect(sales).to.contain.property('Sales not found');
+  });
+
   it('should insert a sale', async function () {
     const insertId = 3;
     sinon.stub(connection, 'execute').resolves([{ insertId }]);

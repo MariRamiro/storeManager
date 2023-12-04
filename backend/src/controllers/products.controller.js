@@ -9,7 +9,6 @@ const getAllProducts = async (_req, res) => {
 const getByIdProduct = async (req, res) => {
   const { id } = req.params;
   const { status, data } = await service.getByIdProduct(id);
-  console.log(status);
   if (status === 'NOT_FOUND') {
     return res.status(mapStatusHTTP(status)).json({ message: data.message });
   }
