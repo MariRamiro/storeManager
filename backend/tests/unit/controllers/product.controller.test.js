@@ -25,7 +25,7 @@ describe('Testing product controller layer', function () {
   });
 
   it('should return a product by id', async function () {
-    sinon.stub(service, 'getAllProducts').resolves({ status: 'SUCCESSFUL', data: productsMock[0] });
+    sinon.stub(service, 'getByIdProduct').resolves({ status: 'SUCCESSFUL', data: productsMock[0] });
 
     const req = {
       params: {
@@ -41,6 +41,25 @@ describe('Testing product controller layer', function () {
 
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.deep.calledWith(productsMock[0]);
+  });
+
+  it('should return "NOT_FOUND" status if nonexistent product', async function () {
+    sinon.stub(service, 'getByIdProduct').resolves({ status: 'NOT_FOUND', data: { message: 'Product not found' } });
+
+    const req = {
+      params: {
+        id: 7,
+      },
+    };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+  
+    await controller.getByIdProduct(req, res);
+
+    expect(res.status).to.be.calledWith(404);
+    expect(res.json).to.be.deep.calledWith({ message: 'Product not found' });
   });
 
   it('should delete a product', async function () {
@@ -62,7 +81,7 @@ describe('Testing product controller layer', function () {
     expect(res.json).to.be.deep.calledWith(affectedRows);
   });
 
-  it('should not delete a product that not exists', async function () {
+  it('should not delete a nonexistent product', async function () {
     const res = {};
     const req = {
       params: 7,
@@ -78,6 +97,59 @@ describe('Testing product controller layer', function () {
     expect(res.status).to.be.calledWith(404);
     expect(res.json).to.be.deep.calledWith({ message: 'Product not found' });
   });
+
+  it('should insert a product', async function () {
+    sinon.stub(service, 'insertProduct').resolves({ status: 'CREATED', data: {
+      id: 4,
+      name: 'Roupa de banho',
+    } });
+
+    const req = {
+      body: {
+        name: 'Roupa de banho',
+      },
+    };
+    const res = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    await controller.insertProduct(req, res);
+
+    expect(res.status).to.be.calledWith(201);
+    expect(res.json).to.be.deep.calledWith({
+      id: 4,
+      name: 'Roupa de banho',
+    });
+  });
+
+  // it('should update a product', async function () {
+  //   sinon.stub(service, 'updateProduct').resolves({ status: 'SUCCESSFUL', data: {
+  //     id: 4,
+  //     name: 'Roupa de festa',
+  //   } });
+
+  //   const req = {
+  //     params: {
+  //       id: 4,
+  //     },
+  //     body: {
+  //       name: 'Roupa de festa',
+  //     },
+  //   };
+  //   const res = {};
+
+  //   res.status = sinon.stub().returns(res);
+  //   res.json = sinon.stub().returns(res);
+
+  //   await controller.updateProduct(req, res);
+
+  //   expect(res.status).to.be.calledWith(200);
+  //   expect(res.json).to.be.deep.calledWith({
+  //     id: 4,
+  //     name: 'Roupa de festa',
+  //   });
+  // });
   
   afterEach(function () {
     sinon.restore();

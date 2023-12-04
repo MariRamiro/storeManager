@@ -27,6 +27,28 @@ describe('Testing product model layer', function () {
     });
   });
 
+  it('should insert a new product', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+
+    const newInsertId = await model.insertProduct('Roupa de banho');
+
+    expect(newInsertId).to.be.a('number');
+    expect(newInsertId).to.be.deep.equal(4);
+  });
+
+  it('should update a product', async function () {
+    const newProduct = { id: 4, name: 'Roupa de banho' };
+    sinon.stub(connection, 'execute').resolves({ affectedRows: 1 });
+
+    const id = 4;
+    const name = 'Roupa de banho';
+
+    const product = await model.updateProduct(id, name);
+
+    expect(product).to.be.a('object');
+    expect(product).to.be.deep.equal(newProduct);
+  });
+
   it('should delete a product', async function () {
     const id = 1;
     const affectedRows = 1;

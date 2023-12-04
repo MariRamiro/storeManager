@@ -1,11 +1,11 @@
-// const camelize = require('camelize');
+const camelize = require('camelize');
 const connection = require('../db/connection');
 
 const getAllProducts = async () => {
   const [products] = await connection.execute(
     'SELECT * FROM products ORDER BY id;',
   );
-  return (products);
+  return camelize(products);
 };
 
 const getByIdProduct = async (id) => {
@@ -16,19 +16,19 @@ const getByIdProduct = async (id) => {
   return (product);
 };
 
-const insertProduct = async (data) => {
-  const [insert] = await connection.execute(
-    `INSERT INTO products (name)
-      VALUES (?);`,
-    [data.name],
-  );
-  return (insert);
+const insertProduct = async (productName) => {
+  const [{ insertId }] = await connection
+    .execute('INSERT INTO products (name) VALUES (?);', [productName]);
+  return insertId;
 };
 
-const updateProduct = async (name, id) => {
-  const [{ affectedRows }] = await connection
-    .execute('UPDATE products SET name = ? WHERE id = ?;', [name, id]);
-  return affectedRows;
+const updateProduct = async (id, productName) => {
+  await connection
+    .execute('UPDATE products SET name = ? WHERE id = ?;', [id, productName]);
+  return {
+    id: Number(id),
+    name: productName,
+  };
 };
 
 const deleteProduct = async (id) => {

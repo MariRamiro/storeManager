@@ -14,6 +14,24 @@ describe('Testing sales service layer', function () {
     expect(sales.status).to.be.equal('SUCCESSFUL');
   });
 
+  it('should return an empty array', async function () {
+    sinon.stub(model, 'getAllSales').resolves([]);
+
+    const { status, data } = await service.getAllSales();
+
+    expect(status).to.be.equal('SUCCESSFUL');
+    expect(data).to.deep.equal([]);
+  });
+
+  it('should return "NOT_FOUND" if nonexistent id', async function () {
+    sinon.stub(model, 'getByIdSale').resolves();
+
+    const { status, data } = await service.getByIdSale(99);
+
+    expect(status).to.be.equal('NOT_FOUND');
+    expect(data.message).to.be.deep.equal('Sale not found');
+  });
+
   it('should return sale by id', async function () {
     sinon.stub(model, 'getByIdSale').resolves([salesMock]);
 

@@ -13,9 +13,13 @@ const getByIdProduct = async (id) => {
   return { status: 'SUCCESSFUL', data: product };
 };
 
-const insertProduct = async (data) => {
-  const { insertId } = await model.insertProduct(data);
-  return { status: 'CREATED', data: { id: insertId } };
+const insertProduct = async (productName) => {
+  const insertId = await model.insertProduct(productName);
+  const product = {
+    id: insertId,
+    name: productName,
+  };
+  return { status: 'CREATED', data: product };
 };
 
 const updateProduct = async (name, id) => {

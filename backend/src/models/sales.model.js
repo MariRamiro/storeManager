@@ -1,3 +1,4 @@
+const camelize = require('camelize');
 const connection = require('../db/connection');
 
 const getAllSales = async () => {
@@ -9,7 +10,7 @@ const getAllSales = async () => {
       ORDER BY sale_id, product_id;`, 
   );
 
-  return sales;
+  return camelize(sales);
 };
 
 const getByIdSale = async (id) => {
@@ -22,7 +23,7 @@ const getByIdSale = async (id) => {
       ORDER BY sale_id, product_id;`,
     [id],
   );
-  return sale;
+  return camelize(sale);
 };
 
 const insertSale = async (data) => {
