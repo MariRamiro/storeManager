@@ -38,8 +38,16 @@ const insertSale = async (data) => {
   return insertId;
 };
 
+const findByIdSale = async (id) => {
+  const [[sale]] = await connection
+    .execute('SELECT * FROM sales WHERE id = ?', [id]);
+  
+  return camelize(sale);
+};
+
 module.exports = {
   getAllSales,
   getByIdSale,
   insertSale,
+  findByIdSale,
 };
