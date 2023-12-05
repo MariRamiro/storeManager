@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+const productsCheck = (req, res, next) => {
   const { name } = req.body;
 
   if (!name) return res.status(400).json({ message: '"name" is required' });
@@ -9,3 +9,5 @@ module.exports = (req, res, next) => {
   }
   next();
 };
+
+module.exports = productsCheck;

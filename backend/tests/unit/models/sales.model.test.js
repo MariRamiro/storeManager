@@ -24,7 +24,7 @@ describe('Testing sales model layer', function () {
   });
 
   it('should return sale error message', async function () {
-    sinon.stub(connection, 'execute').resolves([{ 'Sales not found': 'Sale not found '}]);
+    sinon.stub(connection, 'execute').resolves([{ 'Sales not found': 'Sale not found ' }]);
 
     const sales = await model.getByIdSale(7);
 

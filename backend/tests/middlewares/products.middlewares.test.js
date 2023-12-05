@@ -8,8 +8,8 @@ chai.use(sinonChai);
 const { expect } = chai;
 
 describe('Testing products check middlewares', function () {
-  it('should return error message when name is empty', function () {
-    const data = { name: 'Azul'};
+  it('if without "name",should return error message', function () {
+    const data = { name: 'Azul' };
     const req = { body: data };
     const res = { status:
       sinon.stub().returns({ json: sinon.stub() }) };
