@@ -26,8 +26,20 @@ const insertSale = async (data) => {
   return { status: 'CREATED', data: newData };
 };
 
+const deleteSale = async (id) => {
+  await model.deleteSale(id);
+  return { status: 'DELETED' };
+};
+
+const updateSale = async (saleId, productId, quantity) => {
+  const updatedSale = await model.updateSale(saleId, productId, quantity);
+  return { status: 'SUCCESSFUL', data: updatedSale };
+};
+
 module.exports = {
   getAllSales,
   getByIdSale,
   insertSale,
+  deleteSale,
+  updateSale,
 };

@@ -45,9 +45,33 @@ const findByIdSale = async (id) => {
   return camelize(sale);
 };
 
+const deleteSale = async (id) => {
+  await connection.execute('DELETE FROM sales WHERE id = ?', [id]);
+  return id;
+};
+
+const updateSale = async (saleId, productId, quantity) => {
+  await connection.execute(
+    'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?', 
+    [quantity, saleId, productId],
+  );
+  
+  const date = new Date();
+  const updatedSale = {
+    date,
+    productId: Number(productId),
+    quantity,
+    saleId: Number(productId),
+  };
+  
+  return updatedSale;
+};
+
 module.exports = {
   getAllSales,
   getByIdSale,
   insertSale,
   findByIdSale,
+  deleteSale,
+  updateSale,
 };

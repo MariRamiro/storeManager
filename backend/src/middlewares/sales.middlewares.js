@@ -1,5 +1,5 @@
 const productsModel = require('../models/products.model');
-// const salesModel = require('../models/sales.model');
+const salesModel = require('../models/sales.model');
 
 const salesCheck = (req, res, next) => {
   const sales = req.body;
@@ -56,10 +56,46 @@ const findProductId = async (sales) => {
 const salesProductsCheck = async (req, res, next) => {
   const sales = req.body;
   const products = await findProductId(sales);
-
+  
   if (products.includes(undefined)) {
     return res.status(404).json({ message: 'Product not found' });
   }
+
+  next();
+};
+
+const saleCheck = async (req, res, next) => {
+  const { id } = req.params;
+  const sale = await salesModel.findByIdSale(id);
+
+  if (sale === undefined) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
+
+  next();
+};
+
+const saleQuantityValid = async (req, res, next) => {
+  const { quantity } = req.body;
+
+  if (quantity === undefined) {
+    return res.status(400).json({ message: '"quantity" is required' });
+  }
+  if (quantity <= 0) {
+    return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+  }
+
+  next();
+};
+
+const saleProductValid = async (req, res, next) => {
+  const { saleId, productId } = req.params;
+
+  const product = await productsModel.getByIdProduct(productId);
+  if (!product) return res.status(404).json({ message: 'Product not found in sale' });
+
+  const sale = await salesModel.getByIdSale(saleId);
+  if (!sale.length) return res.status(404).json({ message: 'Sale not found' });
 
   next();
 };
@@ -68,4 +104,7 @@ module.exports = {
   salesCheck,
   salesQuantityCheck,
   salesProductsCheck,
+  saleCheck,
+  saleQuantityValid,
+  saleProductValid,
 };

@@ -14,4 +14,6 @@ productsRoutes.put('/:id', productsCheck, controller.updateProduct);
 
 productsRoutes.delete('/:id', controller.deleteProduct);
 
+productsRoutes.get('/search', controller.getProducts);
+
 module.exports = productsRoutes;
