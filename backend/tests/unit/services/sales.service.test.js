@@ -59,6 +59,25 @@ describe('Testing sales service layer', function () {
     expect(status).to.be.equal('CREATED');
     expect(data).to.be.deep.equal(salesMockRes);
   });
+
+  it('should delete a sale', async function () {
+    const deletedId = 3;
+    sinon.stub(model, 'deleteSale').resolves(deletedId);
+
+    const { status } = await service.deleteSale(deletedId);
+
+    expect(status).to.be.equal('DELETED');
+  });
+
+  it('should return error if didn t delete a sale', async function () {
+    const deletedId = 7;
+
+    sinon.stub(model, 'deleteSale').resolves([[{ id: 7 }]]);
+
+    const { status } = await service.deleteSale(deletedId);
+  
+    expect(status).to.be.equal('DELETED');
+  });
   
   afterEach(function () {
     sinon.restore();

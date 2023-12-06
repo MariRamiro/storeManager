@@ -79,6 +79,40 @@ describe('Testing sales controller layer', function () {
     expect(res.status).to.be.calledWith(201);
     expect(res.json).to.be.deep.calledWith(salesMockRes);
   });
+
+  it('should delete a sale', async function () {
+    sinon.stub(service, 'deleteSale').resolves({ status: 'DELETED' });
+
+    const req = {
+      params: {
+        id: 3,
+      },
+    };
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    await controller.deleteSale(req, res);
+
+    expect(res.status).to.be.calledWith(204);
+  });
+
+  it('should return error if didn t delete a sale', async function () {
+    sinon.stub(service, 'deleteSale').resolves({ status: 'NOT_FOUND' });
+
+    const req = {
+      params: {
+        id: 7,
+      },
+    };
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    await controller.deleteSale(req, res);
+
+    expect(res.status).to.be.calledWith(404);
+  });
   
   afterEach(function () {
     sinon.restore();

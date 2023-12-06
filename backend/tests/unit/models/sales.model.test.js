@@ -41,6 +41,16 @@ describe('Testing sales model layer', function () {
     expect(sales).to.be.deep.equal(insertId);
   });
 
+  it('should delete a sale', async function () {
+    const deleteId = 3;
+    sinon.stub(connection, 'execute').resolves([[{ id: 3 }]]);
+
+    const deletedSale = await model.deleteSale(deleteId);
+
+    expect(deletedSale).to.be.a('number');
+    expect(deletedSale).to.be.deep.equal(deleteId);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

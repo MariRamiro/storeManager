@@ -7,7 +7,7 @@ const { expect } = chai;
 chai.use(sinonChai);
 
 describe('Testing sales middleware', function () {
-  it('if whithout "productId", should return msg error', async function () {
+  it('if whithout "productId", should return error', async function () {
     const req = { body: [{ quantity: 1 }] };
     const res = {};
     const next = sinon.stub().returns();
@@ -22,7 +22,7 @@ describe('Testing sales middleware', function () {
     expect(next).not.to.have.been.calledWith();
   });
 
-  it('if without "quantity", should return msg error', async function () {
+  it('if without "quantity", should return error', async function () {
     const req = { body: [{ productId: 1 }] };
     const res = {};
     const next = sinon.stub().returns();
