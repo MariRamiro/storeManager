@@ -9,16 +9,56 @@ const { expect } = chai;
 
 describe('Testing products check middlewares', function () {
   it('if without "name",should return error message', function () {
-    const data = { name: 'Azul' };
-    const req = { body: data };
-    const res = { status:
-      sinon.stub().returns({ json: sinon.stub() }) };
+    const req = { 
+      body: {},
+    };
+    const res = {};
     const next = sinon.stub().returns();
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    middlewares(req, res, next);
+
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.status().json).to.have.been.calledWith({ message: '"name" is required' });
+    expect(next).not.to.have.been.calledWith();
+  });
+
+  it('"name" should be at least 5 characters long', async function () {
+    const req = { 
+      body: {
+        name: 'test',
+      },
+    };
+    const res = {};
+    const next = sinon.stub().returns();
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
 
     middlewares(req, res, next);
 
     expect(res.status).to.have.been.calledWith(422);
     expect(res.status().json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
+    expect(next).not.to.have.been.calledWith();
+  });
+
+  it('"next" should work correctly', async function () {
+    const req = { 
+      body: {
+        name: 'active',
+      },
+    };
+    const res = {};
+    const next = sinon.stub().returns();
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns(res);
+
+    middlewares(req, res, next);
+
+    expect(next).to.have.been.calledWith();
   });
 
   afterEach(sinon.restore);
