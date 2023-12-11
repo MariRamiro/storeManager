@@ -9,6 +9,13 @@ const { salesCheck,
 
 const salesRoutes = Router();
 
+salesRoutes.put(
+  '/:saleId/products/:productId/quantity',
+  saleQuantityValid,
+  saleProductValid, 
+  controller.updateSale,
+);
+
 salesRoutes.post('/', salesCheck, salesQuantityCheck, salesProductsCheck, controller.insertSale);
 
 salesRoutes.get('/', controller.getAllSales);
@@ -16,12 +23,5 @@ salesRoutes.get('/', controller.getAllSales);
 salesRoutes.get('/:id', controller.getByIdSale);
 
 salesRoutes.delete('/:id', saleCheck, controller.deleteSale);
-
-salesRoutes.put(
-  '/:saleId/products/:productId/quantity', 
-  saleQuantityValid,
-  saleProductValid, 
-  controller.updateSale,
-);
 
 module.exports = salesRoutes;

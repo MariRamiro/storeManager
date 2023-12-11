@@ -77,7 +77,7 @@ const saleCheck = async (req, res, next) => {
 
 const saleQuantityValid = async (req, res, next) => {
   const { quantity } = req.body;
-
+  console.log('a = b');
   if (quantity === undefined) {
     return res.status(400).json({ message: '"quantity" is required' });
   }
@@ -90,12 +90,12 @@ const saleQuantityValid = async (req, res, next) => {
 
 const saleProductValid = async (req, res, next) => {
   const { saleId, productId } = req.params;
-
-  const product = await productsModel.getByIdProduct(productId);
-  if (!product) return res.status(404).json({ message: 'Product not found in sale' });
-
-  const sale = await salesModel.getByIdSale(saleId);
-  if (!sale.length) return res.status(404).json({ message: 'Sale not found' });
+  
+  const sale = await salesModel.findByIdSale(saleId);
+  if (sale === undefined) return res.status(404).json({ message: 'Sale not found' });
+  
+  const product = await salesModel.updateProductsSale(saleId, productId);
+  if (product === undefined) return res.status(404).json({ message: 'Product not found in sale' });
 
   next();
 };

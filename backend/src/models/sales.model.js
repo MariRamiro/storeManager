@@ -40,7 +40,7 @@ const insertSale = async (data) => {
 
 const findByIdSale = async (id) => {
   const [[sale]] = await connection
-    .execute('SELECT * FROM sales WHERE id = ?', [id]);
+    .execute('SELECT id FROM sales WHERE id = ?', [id]);
   
   return camelize(sale);
 };
@@ -56,15 +56,23 @@ const updateSale = async (saleId, productId, quantity) => {
     [quantity, saleId, productId],
   );
   
-  const date = new Date();
   const updatedSale = {
-    date,
+    date: new Date(),
     productId: Number(productId),
     quantity,
-    saleId: Number(productId),
+    saleId: Number(saleId),
   };
   
   return updatedSale;
+};
+
+const updateProductsSale = async (saleId, productId) => {
+  const [[sale]] = await connection.execute(
+    'SELECT * FROM sales_products WHERE sale_id = ? AND product_id = ?',
+    [saleId, productId],
+  );
+
+  return camelize(sale);
 };
 
 module.exports = {
@@ -74,4 +82,5 @@ module.exports = {
   findByIdSale,
   deleteSale,
   updateSale,
+  updateProductsSale,
 };
